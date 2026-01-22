@@ -106,7 +106,10 @@ class FilterApp(Tk):
         filter_button.grid(column=6, row=7, sticky=W)
 
         self.prog_label = ttk.Label(self.mainframe, text="")
-        self.prog_label.grid(column=6, row=8, sticky=(W, E))
+        self.prog_label.grid(column=1, row=8, sticky=(W, E))
+
+        self.chart_name_label = ttk.Label(self.mainframe, text="", wraplength=500)
+        self.chart_name_label.grid(column=1, row=9, columnspan=10, sticky=(W, E))
 
         self.resizable(width=False, height=False)
         self.columnconfigure(0, weight=1)
@@ -140,8 +143,9 @@ class FilterApp(Tk):
                 copy_chart = False
                 filename, ext = os.path.splitext(file)
                 if ext == '.chart':
+                    self.chart_name_label.configure(text=f"Current Chart: {path + '\\' + file}")
                     lead_flags = rhythm_flags = bass_flags = drums_flags = sixfret_flags = [False] * 4
-                    with open(path + '\\' + file, encoding="utf-8") as lines:
+                    with open(path + '\\' + file, encoding="latin-1") as lines:
                         # Search the .chart file for any notes on the given highway
                         for line in lines:
                             if 'Single' in line:
@@ -205,6 +209,7 @@ class FilterApp(Tk):
                 # .mid has no difficulty indicators in it's text, so difficulty cannot be discerned
                 # The user must select only Expert for difficulty to include .mid files.
                 if ext == '.mid' and self.include_mid.get():
+                    self.chart_name_label.configure(text=f"Current Chart: {path + '\\' + file}")
                     with open(path + '\\' + file, encoding="latin-1") as lines:
                         # Search the .mid file for any notes on the given highway
                         for line in lines:
@@ -273,5 +278,4 @@ class FilterApp(Tk):
 
 if __name__ == '__main__':
     root = FilterApp()
-
     root.mainloop()
