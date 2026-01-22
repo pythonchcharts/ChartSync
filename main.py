@@ -24,13 +24,11 @@ class FilterApp(Tk):
         ttk.Label(self.mainframe, text="Local Library:").grid(column=1, row=1, sticky=W)
         self.local_library = StringVar()
         local_entry = ttk.Entry(self.mainframe, width=28, textvariable=self.local_library)
-        local_entry.insert(0, 'D:\\Games\\Clone Hero\\Song Packs\\AA Unreleased')
         local_entry.grid(column=2, row=1, columnspan=6, sticky=(W, E))
 
         ttk.Label(self.mainframe, text="Destination:").grid(column=1, row=2, sticky=W)
         self.destination = StringVar()
         dest_entry = ttk.Entry(self.mainframe, width=28, textvariable=self.destination)
-        dest_entry.insert(0, 'D:\\Games\\Clone Hero\\Test')
         dest_entry.grid(column=2, row=2, columnspan=6, sticky=(W, E))
 
         ttk.Label(self.mainframe, text="Filter by instrument:").grid(column=1, row=3, sticky=(W, E))
@@ -275,4 +273,5 @@ class FilterApp(Tk):
 
 if __name__ == '__main__':
     root = FilterApp()
+
     root.mainloop()
