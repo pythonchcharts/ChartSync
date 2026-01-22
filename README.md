@@ -9,7 +9,7 @@ The program could take quite a while to run, but will show progress.
 ===To Run===
 
 
-To run the tool, all you need is ChartFilter.exe, which can be found on the [releases page](https://github.com/pythonchcharts/ChartSync/releases/tag/release)
+To run the tool, all you need is ChartSync.exe, which can be found on the [releases page](https://github.com/pythonchcharts/ChartSync/releases/tag/release)
 
 
 ===To Make Changes===
@@ -18,10 +18,11 @@ To run the tool, all you need is ChartFilter.exe, which can be found on the [rel
 Edit main.py and rebuild using PyInstaller with the following command:
 
 
-pyinstaller ./ChartFilter.spec
+pyinstaller ./ChartSync.spec
 
 
 Your new exe will be found in dist
+
 
 
 
