@@ -18,7 +18,7 @@ For a less restrictive filter, here is an example of a filter that searches for 
 
 <img width="630" height="371" alt="image" src="https://github.com/user-attachments/assets/59b26a82-51da-483c-99f4-d5e563c21963" />
 
-As noted on the UI, .mid files cannot be filtered by difficulty. This is because the program reads the file as text, and .mid does not have any discernable way to determine what difficulties are available on the chart in text format. You must select at least one difficulty for the program to run, but it will have no effect on .mid charts. If you want to include .mid charts in your output anyway, check the "Include .mid" option.
+As noted on the UI, .mid files cannot be filtered by difficulty. This is because the program reads the file as text and .mid does not have any discernable way to determine what difficulties are available on the chart in text format. You must select at least one difficulty for the program to run but it will have no effect on .mid charts. If you want to include .mid charts in your output anyway, check the "Include .mid" option.
 
 
 
@@ -32,6 +32,7 @@ pyinstaller ./ChartSync.spec
 
 
 Your new exe will be found in dist
+
 
 
 
