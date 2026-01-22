@@ -8,7 +8,7 @@ Enter your source and destination paths, select any desired instruments and diff
 ## How to Run
 
 
-To run the tool, all you need is ChartFilter.exe, which can be found on the [releases page](https://github.com/pythonchcharts/ChartFilter/releases)
+To run the tool, all you need is ChartSync.exe, which can be found on the [releases page](https://github.com/pythonchcharts/ChartSync/releases)
 
 The instrument filters are non-exact, any chart with any of the selected instruments will be copied to the new library. The difficulty filters can be exact by enabling the "Exact?" flag, but otherwise are not and behave the same as instruments. Here is an example of a filter that will search only for full difficulty charts:
 
@@ -31,6 +31,7 @@ pyinstaller ./ChartSync.spec
 
 
 Your new exe will be found in dist
+
 
 
 
