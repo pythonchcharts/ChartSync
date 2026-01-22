@@ -34,6 +34,11 @@ pyinstaller ./ChartSync.spec
 Your new exe will be found in dist
 
 
+## Planned Features
+
+- Destination cleanup: removing files in the destination directory that do not exist in the source. This means deleted charts in the source will also be deleted on the next sync.
+- Exact modifier for instruments: Instruments should also have an exact modifier like difficulty does so that they behave the same way
+
 
 
 
