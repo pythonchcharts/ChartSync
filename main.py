@@ -90,6 +90,12 @@ class FilterApp(Tk):
         )
         easy_check.grid(column=5, row=4, sticky=(W, E))
 
+        self.exact = BooleanVar()
+        exact_check = ttk.Checkbutton(
+            self.mainframe, text='Exact?', variable=self.exact, onvalue=True, offvalue=False
+        )
+        exact_check.grid(column=6, row=4, sticky=(W, E))
+
         # ADDITIONAL CHECKBOXES
         ttk.Label(
             self.mainframe,
@@ -195,7 +201,9 @@ class FilterApp(Tk):
                                     sixfret_flags[3] = True
                         lines.close()
                     user_params = [self.expert.get(), self.hard.get(), self.medium.get(), self.easy.get()]
-                    if self.lead.get() and lead_flags == user_params:
+                    if self.lead.get() and \
+                            ((self.exact.get() and lead_flags == user_params) or \
+                            (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(lead_flags, user_params)))):
                         copy_chart = True
                     elif self.rhythm.get() and rhythm_flags == user_params:
                         copy_chart = True
@@ -225,6 +233,8 @@ class FilterApp(Tk):
                                 copy_chart = True
                         lines.close()
                 if copy_chart:
+                    copy_chart = False
+                    charts_copied += 1
                     for file in files:
                         full_filepath = path + '\\' + file
                         path_suffix = path.replace(rootdir, "")
@@ -239,7 +249,6 @@ class FilterApp(Tk):
                             os.makedirs(dest_path, exist_ok=True)
                             shutil.copy(full_filepath, dest_path)
                             total_files_copied += 1
-                    charts_copied += 1
                     self.prog_label.configure(text=f"Charts copied: {charts_copied}/{total_charts}")
 
         self.prog_label.configure(text=f"Charts copied: {charts_copied}/{total_charts}")
