@@ -14,7 +14,7 @@ The instrument filters are non-exact, any chart with any of the selected instrum
 
 <img width="631" height="369" alt="image" src="https://github.com/user-attachments/assets/dd103f2d-bc85-4a88-88cd-fadcf06db7b7" />
 
-For a less restrictive filter, here is an example of a filter that searches for any charts with drums and an expert chart, without caring what else the charts have:
+For a less restrictive filter, here is an example of a filter that searches for any charts with an expert drums chart, without caring what else the charts have:
 
 <img width="630" height="371" alt="image" src="https://github.com/user-attachments/assets/59b26a82-51da-483c-99f4-d5e563c21963" />
 
@@ -37,6 +37,7 @@ Your new exe will be found in dist
 ## Planned Features
 
 - Exact modifier for instruments: Instruments should also have an exact modifier like difficulty does so that they behave the same way
+
 
 
 
