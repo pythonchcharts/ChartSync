@@ -2,7 +2,7 @@
 
 A little script made by python :)
 
-Enter your source and destination paths, select any desired instruments and difficulties, and hit Sync. The program will begin copying any qualifying charts to the destination directory, mirroring the directory structure present in the source, and excluding any charts that do not meet the filters set by the user.
+Enter your source and destination paths, select any desired instruments and difficulties, and hit Sync. The program will begin copying any qualifying charts to the destination directory, mirroring the directory structure present in the source, and excluding any charts that do not meet the filters set by the user. Any charts that were removed in the source will be deleted in the destination after syncing.
 
 
 ## How to Run
@@ -10,7 +10,7 @@ Enter your source and destination paths, select any desired instruments and diff
 
 To run the tool, all you need is ChartSync.exe, which can be found on the [releases page](https://github.com/pythonchcharts/ChartSync/releases)
 
-The instrument filters are non-exact, any chart with any of the selected instruments will be copied to the new library. The difficulty filters can be exact by enabling the "Exact?" flag, but otherwise are not and behave the same as instruments. Here is an example of a filter that will search only for full difficulty charts:
+The instrument filters are non-exact, any chart with any of the selected instruments will be copied to the new library. The difficulty filters can be exact by enabling the "Exact?" flag, but otherwise are not and behave the same as instruments. Here is an example of a filter that will search only for full difficulty charts with any instrument:
 
 <img width="631" height="369" alt="image" src="https://github.com/user-attachments/assets/dd103f2d-bc85-4a88-88cd-fadcf06db7b7" />
 
@@ -36,8 +36,8 @@ Your new exe will be found in dist
 
 ## Planned Features
 
-- Destination cleanup: removing files in the destination directory that do not exist in the source. This means deleted charts in the source will also be deleted on the next sync.
 - Exact modifier for instruments: Instruments should also have an exact modifier like difficulty does so that they behave the same way
+
 
 
 
