@@ -108,8 +108,8 @@ class FilterApp(Tk):
         )
         mid_check.grid(column=2, row=6, sticky=(W, E))
 
-        filter_button = ttk.Button(self.mainframe, text="Sync", command=lambda:threading.Thread(target=self.show_confirmation).start())
-        filter_button.grid(column=6, row=7, sticky=W)
+        sync_button = ttk.Button(self.mainframe, text="Sync", command=lambda:threading.Thread(target=self.show_confirmation).start())
+        sync_button.grid(column=3, row=7, sticky=(W, E))
 
         self.prog_label = ttk.Label(self.mainframe, text="")
         self.prog_label.grid(column=1, row=8, sticky=(W, E))
@@ -125,15 +125,16 @@ class FilterApp(Tk):
             child.grid_configure(padx=5, pady=5)
 
         local_entry.focus()
-        self.bind("<Return>", self.filter_songs)
+        self.bind("<Return>", self.filter_and_sync)
 
         sv_ttk.set_theme("dark")
 
-    def filter_songs(self):
+    def filter_and_sync(self):
         total_files = 0
         total_files_copied = 0
         charts_copied = 0
         rootdir = self.local_library.get()
+        destdir = self.destination.get()
 
         # count all chart dirs
         chart_dirs = []
@@ -205,17 +206,25 @@ class FilterApp(Tk):
                             ((self.exact.get() and lead_flags == user_params) or \
                             (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(lead_flags, user_params)))):
                         copy_chart = True
-                    elif self.rhythm.get() and rhythm_flags == user_params:
+                    elif self.rhythm.get() \
+                            ((self.exact.get() and rhythm_flags == user_params) or \
+                            (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(rhythm_flags, user_params)))):
                         copy_chart = True
-                    elif self.bass.get() and bass_flags == user_params:
+                    elif self.bass.get() \
+                            ((self.exact.get() and bass_flags == user_params) or \
+                            (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(bass_flags, user_params)))):
                         copy_chart = True
-                    elif self.drums.get() and drums_flags == user_params:
+                    elif self.drums.get() \
+                            ((self.exact.get() and drums_flags == user_params) or \
+                            (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(drums_flags, user_params)))):
                         copy_chart = True
-                    elif self.sixfret.get() and sixfret_flags == user_params:
+                    elif self.sixfret.get() \
+                            ((self.exact.get() and sixfret_flags == user_params) or \
+                            (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(sixfret_flags, user_params)))):
                         copy_chart = True
 
-                # .mid has no difficulty indicators in it's text, so difficulty cannot be discerned
-                # The user must select only Expert for difficulty to include .mid files.
+                # .mid has no difficulty indicators in its text, so difficulty cannot be discerned
+                # The user must explicitly indicate to include .mid files.
                 if ext == '.mid' and self.include_mid.get():
                     self.chart_name_label.configure(text=f"Current Chart: {path + '\\' + file}")
                     with open(path + '\\' + file, encoding="latin-1") as lines:
@@ -232,27 +241,49 @@ class FilterApp(Tk):
                             elif 'PART GUITAR GHL' in line and self.sixfret.get():
                                 copy_chart = True
                         lines.close()
+
                 if copy_chart:
                     copy_chart = False
                     charts_copied += 1
                     for file in files:
-                        full_filepath = path + '\\' + file
+                        full_path_root = path + '\\' + file
                         path_suffix = path.replace(rootdir, "")
-                        dest_path = self.destination.get() + path_suffix
-                        if os.path.exists(dest_path + '\\' + file):
-                            if self.file_hash(full_filepath) != self.file_hash(dest_path + '\\' + file):
-                                shutil.copy(full_filepath, dest_path)
+                        dest_path = destdir + path_suffix
+                        full_path_dest = dest_path + '\\' + file
+                        if os.path.exists(full_path_dest):
+                            if self.file_hash(full_path_root) != self.file_hash(full_path_dest):
+                                shutil.copy(full_path_root, dest_path)
                                 total_files_copied += 1
                             else:
-                                print(full_filepath + " is identical to the file at destination, not copying")
+                                print(full_path_root + " is identical to the file at destination, not copying")
                         else:
                             os.makedirs(dest_path, exist_ok=True)
-                            shutil.copy(full_filepath, dest_path)
+                            shutil.copy(full_path_root, dest_path)
                             total_files_copied += 1
                     self.prog_label.configure(text=f"Charts copied: {charts_copied}/{total_charts}")
-
-        self.prog_label.configure(text=f"Charts copied: {charts_copied}/{total_charts}")
         print("Total Files Copied: " + str(total_files_copied))
+
+        self.prog_label.configure(text="Cleaning up destination folder...")
+        total_files_deleted = 0
+        # First clean up files
+        for path, dirs, files in os.walk(destdir):
+            for file in files:
+                full_path_dest = path + '\\' + file
+                path_suffix = path.replace(destdir, "")
+                root_path = rootdir + path_suffix
+                full_path_root = root_path + '\\' + file
+                if not os.path.exists(full_path_root) and os.path.exists(full_path_dest):
+                    os.remove(full_path_dest)
+                    total_files_deleted += 1
+        print("Total files deleted: " + str(total_files_deleted))
+        # Then clean up dirs
+        for path, _, _ in os.walk(destdir):
+            try:
+                os.rmdir(path)
+            except OSError:
+                pass
+        self.prog_label.configure(text=f"Complete! Charts processed: {total_files_copied}, Files Deleted: {total_files_deleted}")
+        self.chart_name_label.configure(text="")
 
     def file_hash(self, filepath):
         """Calculates the SHA-256 hash of a file."""
@@ -267,7 +298,6 @@ class FilterApp(Tk):
     def show_confirmation(self):
         result = messagebox.askyesno("Confirm Action", "Are you sure you want to proceed?")
         if result:
-            print("User clicked Yes")
             all_instruments = [self.lead.get(), self.rhythm.get(), self.bass.get(), self.drums.get(), self.sixfret.get()]
             all_diffs = [self.expert.get(), self.hard.get(), self.medium.get(), self.easy.get()]
             if not any(all_instruments):
@@ -279,10 +309,8 @@ class FilterApp(Tk):
                     "For syncing .mid charts, select any difficulty."
                 )
                 return
-            self.filter_songs()
-            messagebox.showinfo("Success!", "Charts processed succesfully")
-        else:
-            print("User clicked No")
+            self.filter_and_sync()
+            messagebox.showinfo("Success!", "Charts processed succesfully.")
 
 
 if __name__ == '__main__':
