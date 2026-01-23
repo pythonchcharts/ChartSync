@@ -2,6 +2,12 @@
 
 A little script made by python :)
 
+This tool serves two purposes:
+- Syncing two Clone Hero chart libraries
+- Filtering charts from one library to the other based on instruments and difficulties charted
+
+I made this to easily and quickly sync my main CH library from my desktop, where I play guitar, to my laptop which I use in another room to play drums. I thought I could make it generic enough to where it may be useful to someone else for possibly different reasons.
+
 Enter your source and destination paths, select any desired instruments and difficulties, and hit Sync. The program will begin copying any qualifying charts to the destination directory, mirroring the directory structure present in the source, and excluding any charts that do not meet the filters set by the user. Any charts that were removed in the source will be deleted in the destination after syncing.
 
 
@@ -37,6 +43,7 @@ Your new exe will be found in dist
 ## Planned Features
 
 - Exact modifier for instruments: Instruments should also have an exact modifier like difficulty does so that they behave the same way
+
 
 
 
