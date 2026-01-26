@@ -206,19 +206,19 @@ class FilterApp(Tk):
                             ((self.exact.get() and lead_flags == user_params) or \
                             (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(lead_flags, user_params)))):
                         copy_chart = True
-                    elif self.rhythm.get() \
+                    elif self.rhythm.get() and \
                             ((self.exact.get() and rhythm_flags == user_params) or \
                             (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(rhythm_flags, user_params)))):
                         copy_chart = True
-                    elif self.bass.get() \
+                    elif self.bass.get() and \
                             ((self.exact.get() and bass_flags == user_params) or \
                             (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(bass_flags, user_params)))):
                         copy_chart = True
-                    elif self.drums.get() \
+                    elif self.drums.get() and \
                             ((self.exact.get() and drums_flags == user_params) or \
                             (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(drums_flags, user_params)))):
                         copy_chart = True
-                    elif self.sixfret.get() \
+                    elif self.sixfret.get() and \
                             ((self.exact.get() and sixfret_flags == user_params) or \
                             (not self.exact.get() and any((item1 and item2) for item1, item2 in zip(sixfret_flags, user_params)))):
                         copy_chart = True
