@@ -151,11 +151,15 @@ class FilterApp(Tk):
                 filename, ext = os.path.splitext(file)
                 if ext == '.chart':
                     self.chart_name_label.configure(text=f"Current Chart: {path + '\\' + file}")
-                    lead_flags = rhythm_flags = bass_flags = drums_flags = sixfret_flags = [False] * 4
+                    lead_flags = [False] * 4
+                    rhythm_flags = [False] * 4
+                    bass_flags = [False] * 4
+                    drums_flags = [False] * 4
+                    sixfret_flags = [False] * 4
                     with open(path + '\\' + file, encoding="latin-1") as lines:
                         # Search the .chart file for any notes on the given highway
                         for line in lines:
-                            if 'Single' in line:
+                            if 'Single]' in line:
                                 if 'Expert' in line:
                                     lead_flags[0] = True
                                 if 'Hard' in line:
@@ -164,7 +168,7 @@ class FilterApp(Tk):
                                     lead_flags[2] = True
                                 if 'Easy' in line:
                                     lead_flags[3] = True
-                            if 'DoubleRhythm' in line:
+                            if 'DoubleRhythm]' in line:
                                 if 'Expert' in line:
                                     rhythm_flags[0] = True
                                 if 'Hard' in line:
@@ -173,7 +177,7 @@ class FilterApp(Tk):
                                     rhythm_flags[2] = True
                                 if 'Easy' in line:
                                     rhythm_flags[3] = True
-                            if 'DoubleBass' in line:
+                            if 'DoubleBass]' in line:
                                 if 'Expert' in line:
                                     bass_flags[0] = True
                                 if 'Hard' in line:
@@ -182,7 +186,7 @@ class FilterApp(Tk):
                                     bass_flags[2] = True
                                 if 'Easy' in line:
                                     bass_flags[3] = True
-                            if 'Drums' in line:
+                            if 'Drums]' in line:
                                 if 'Expert' in line:
                                     drums_flags[0] = True
                                 if 'Hard' in line:
@@ -191,7 +195,7 @@ class FilterApp(Tk):
                                     drums_flags[2] = True
                                 if 'Easy' in line:
                                     drums_flags[3] = True
-                            if 'GHLGuitar' in line:
+                            if 'GHLGuitar]' in line:
                                 if 'Expert' in line:
                                     sixfret_flags[0] = True
                                 if 'Hard' in line:
